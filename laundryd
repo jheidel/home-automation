@@ -1,0 +1,30 @@
+#!/bin/bash
+# /etc/init.d/laundryd
+
+### BEGIN INIT INFO
+# Provides:          laundryd
+# Required-Start:    udev $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Laundry daemon
+# Description:       Daemon to provide laundry notifications.
+### END INIT INFO
+
+
+case "$1" in 
+    start)
+        echo "Starting laundry"
+	/usr/bin/nice -n -10 /home/pi/laundry.py
+        ;;
+    stop)
+        echo "Stopping laundry"
+	pkill -f laundry.py
+        ;;
+    *)
+        echo "Usage: /etc/init.d/laundryd start|stop"
+        exit 1
+        ;;
+esac
+
+exit 0
